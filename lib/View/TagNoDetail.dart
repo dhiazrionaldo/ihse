@@ -729,7 +729,7 @@ class _TagNoDetailState extends State<TagNoDetail> {
                                         ),
                                       ),
                                     ),
-                                    if (snapshot.data![0].TotalScore! >= 90)
+                                    if (snapshot.data![0].TotalScore! >= 80)
                                       Padding(
                                         padding: const EdgeInsets.only(
                                           left: 10,
@@ -758,8 +758,8 @@ class _TagNoDetailState extends State<TagNoDetail> {
                                         ),
                                       )
                                     else if (snapshot.data![0].TotalScore! >=
-                                            70 &&
-                                        snapshot.data![0].TotalScore! < 90)
+                                            60 &&
+                                        snapshot.data![0].TotalScore! < 80)
                                       Padding(
                                         padding: const EdgeInsets.only(
                                           left: 10,
@@ -786,7 +786,7 @@ class _TagNoDetailState extends State<TagNoDetail> {
                                           ),
                                         ),
                                       )
-                                    else if (snapshot.data![0].TotalScore! < 70)
+                                    else if (snapshot.data![0].TotalScore! < 60)
                                       Padding(
                                         padding: const EdgeInsets.only(
                                           left: 10,

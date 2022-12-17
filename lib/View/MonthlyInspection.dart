@@ -244,7 +244,7 @@ class _MonthlyInspectionState extends State<MonthlyInspection> {
                                                             height: 5,
                                                           ),
                                                           if (this.TotalScore >=
-                                                              90)
+                                                              80)
                                                             Container(
                                                               padding:
                                                                   const EdgeInsets
@@ -282,9 +282,9 @@ class _MonthlyInspectionState extends State<MonthlyInspection> {
                                                             )
                                                           else if (this
                                                                       .TotalScore >=
-                                                                  80 &&
+                                                                  60 &&
                                                               this.TotalScore <
-                                                                  90)
+                                                                  80)
                                                             Container(
                                                               padding:
                                                                   const EdgeInsets
@@ -318,7 +318,7 @@ class _MonthlyInspectionState extends State<MonthlyInspection> {
                                                             )
                                                           else if (this
                                                                   .TotalScore <
-                                                              80)
+                                                              60)
                                                             Container(
                                                               padding:
                                                                   const EdgeInsets
