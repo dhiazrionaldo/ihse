@@ -14,13 +14,16 @@ import 'View/equipment.dart';
 import 'View/TagNo.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  String Cookie;
+  HomePage(this.Cookie);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState(Cookie);
 }
 
 class _HomePageState extends State<HomePage> {
+  String Cookie;
+  _HomePageState(this.Cookie);
   bool loading = false;
   int currentIndex = 2;
 
@@ -29,7 +32,7 @@ class _HomePageState extends State<HomePage> {
     try {
       Response response = await post(
           Uri.parse('https://i-hse.azurewebsites.net/api/Account/Logout'),
-          headers: {'Content-Type': 'application/json'});
+          headers: {'Content-Type': 'application/json', 'Cookie': Cookie});
       if (response.statusCode == 200) {
         print(response.statusCode);
         Navigator.of(context).push(
@@ -113,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            child: Inspection(),
+            child: Inspection(Cookie),
           ),
         ),
       ),

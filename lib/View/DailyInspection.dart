@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,25 +8,26 @@ import 'package:ihse/View/MonthlyInspection.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:ihse/Model/InspectionPart.dart';
 import 'package:ihse/Model/equipmentChart.dart';
-
 import '../shared/loading.dart';
 
 class DailyInspection extends StatefulWidget {
   String inspectionType;
   int TotalScore;
+  String Cookie;
 
-  DailyInspection(this.inspectionType, this.TotalScore);
+  DailyInspection(this.inspectionType, this.TotalScore, this.Cookie);
 
   @override
   State<DailyInspection> createState() =>
-      _DailyInspectionState(inspectionType, TotalScore);
+      _DailyInspectionState(inspectionType, TotalScore, Cookie);
 }
 
 class _DailyInspectionState extends State<DailyInspection> {
   String inspectionType;
   int TotalScore;
+  String Cookie;
 
-  _DailyInspectionState(this.inspectionType, this.TotalScore);
+  _DailyInspectionState(this.inspectionType, this.TotalScore, this.Cookie);
 
   Barcode? barcode;
   QRViewController? controller;
@@ -107,18 +107,13 @@ class _DailyInspectionState extends State<DailyInspection> {
             this.barcode = barcode;
           },
         );
-        print(inspectionType);
-        print(TotalScore);
-        print(barcode.code.toString());
-
+        controller.stopCamera();
+        controller.dispose();
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => MonthlyInspection(
-              barcode.code.toString(),
-              inspectionType,
-              TotalScore,
-            ),
+                barcode.code.toString(), inspectionType, TotalScore, Cookie),
           ),
         );
       },

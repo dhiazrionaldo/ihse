@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,13 +14,16 @@ import 'package:ihse/login_page.dart';
 import 'loading.dart';
 
 class Error extends StatefulWidget {
-  const Error({super.key});
+  String Cookies;
+  Error(this.Cookies);
 
   @override
-  State<Error> createState() => _ErrorState();
+  State<Error> createState() => _ErrorState(Cookies);
 }
 
 class _ErrorState extends State<Error> {
+  String Cookies;
+  _ErrorState(this.Cookies);
   int _selectedNavbar = 0;
   bool loading = false;
 
@@ -33,7 +37,7 @@ class _ErrorState extends State<Error> {
       if (_selectedNavbar == 2) {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => HomePage(),
+            builder: (context) => HomePage(Cookies),
           ),
         );
       }
@@ -45,7 +49,7 @@ class _ErrorState extends State<Error> {
     try {
       Response response = await post(
           Uri.parse('https://i-hse.azurewebsites.net/api/Account/Logout'),
-          headers: {'Content-Type': 'application/json'});
+          headers: {'Content-Type': 'application/json', 'Cookie': Cookies});
       if (response.statusCode == 200) {
         print(response.statusCode);
         Navigator.of(context)

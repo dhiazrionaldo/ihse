@@ -12,26 +12,30 @@ import 'package:ihse/shared/loading.dart';
 class TagNoDetail extends StatefulWidget {
   String tagNoId;
   String tagNumber;
-  TagNoDetail(this.tagNoId, this.tagNumber);
+  String Cookie;
+  TagNoDetail(this.tagNoId, this.tagNumber, this.Cookie);
 
   @override
-  State<TagNoDetail> createState() => _TagNoDetailState(tagNoId, tagNumber);
+  State<TagNoDetail> createState() =>
+      _TagNoDetailState(tagNoId, tagNumber, Cookie);
 }
 
 class _TagNoDetailState extends State<TagNoDetail> {
   String tagNoId;
+  String Cookie;
   String tagNumber;
-  _TagNoDetailState(this.tagNoId, this.tagNumber);
+  _TagNoDetailState(this.tagNoId, this.tagNumber, this.Cookie);
 
   Future<List<TagNoDetailModel>> getEquipmentListById() async {
     Response response = await get(
-      Uri.parse(
-          'https://i-hse.azurewebsites.net/api/FireEquipment/GetFireEquipmentByEquipmentListId/' +
-              this.tagNoId),
-    );
+        Uri.parse(
+            'https://i-hse.azurewebsites.net/api/FireEquipment/GetFireEquipmentByEquipmentListId/' +
+                this.tagNoId),
+        headers: {'Content-Type': 'application/json', 'Cookie': Cookie});
 
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);
+      // print(Cookie);
 
       return result.map((e) => TagNoDetailModel.fromJson(e)).toList();
     } else {
@@ -247,10 +251,12 @@ class _TagNoDetailState extends State<TagNoDetail> {
                                                           MaterialPageRoute(
                                                             builder: (context) =>
                                                                 DailyInspection(
-                                                              'Daily',
-                                                              snapshot.data![0]
-                                                                  .TotalScore!,
-                                                            ),
+                                                                    'Daily',
+                                                                    snapshot
+                                                                        .data![
+                                                                            0]
+                                                                        .TotalScore!,
+                                                                    Cookie),
                                                           ),
                                                         );
                                                       },
@@ -316,10 +322,12 @@ class _TagNoDetailState extends State<TagNoDetail> {
                                                           MaterialPageRoute(
                                                             builder: (context) =>
                                                                 DailyInspection(
-                                                              'Weekly',
-                                                              snapshot.data![0]
-                                                                  .TotalScore!,
-                                                            ),
+                                                                    'Weekly',
+                                                                    snapshot
+                                                                        .data![
+                                                                            0]
+                                                                        .TotalScore!,
+                                                                    Cookie),
                                                           ),
                                                         );
                                                       },
@@ -385,10 +393,12 @@ class _TagNoDetailState extends State<TagNoDetail> {
                                                           MaterialPageRoute(
                                                             builder: (context) =>
                                                                 DailyInspection(
-                                                              'Monthly',
-                                                              snapshot.data![0]
-                                                                  .TotalScore!,
-                                                            ),
+                                                                    'Monthly',
+                                                                    snapshot
+                                                                        .data![
+                                                                            0]
+                                                                        .TotalScore!,
+                                                                    Cookie),
                                                           ),
                                                         );
                                                       },
@@ -435,29 +445,17 @@ class _TagNoDetailState extends State<TagNoDetail> {
                                                     ),
                                                     title: TextButton(
                                                       onPressed: () {
-                                                        // Navigator.push(
-                                                        //   context,
-                                                        //   MaterialPageRoute(
-                                                        //     builder: (context) =>
-                                                        //         MonthlyInspection(
-                                                        //       snapshot.data![0]
-                                                        //           .TagNumber
-                                                        //           .toString(),
-                                                        //       'Yearly',
-                                                        //       snapshot.data![0]
-                                                        //           .TotalScore!,
-                                                        //     ),
-                                                        //   ),
-                                                        // );
                                                         Navigator.push(
                                                           context,
                                                           MaterialPageRoute(
                                                             builder: (context) =>
                                                                 DailyInspection(
-                                                              'Yearly',
-                                                              snapshot.data![0]
-                                                                  .TotalScore!,
-                                                            ),
+                                                                    'Yearly',
+                                                                    snapshot
+                                                                        .data![
+                                                                            0]
+                                                                        .TotalScore!,
+                                                                    Cookie),
                                                           ),
                                                         );
                                                       },
@@ -521,112 +519,134 @@ class _TagNoDetailState extends State<TagNoDetail> {
                     Row(
                       children: [
                         Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: ExpansionTileCard(
-                              borderRadius: BorderRadius.circular(15),
-                              leading: const Icon(
-                                Icons.menu_book_rounded,
-                                color: Colors.blueAccent,
-                                size: 55,
-                              ),
-                              title: Text(
-                                'Score Guidance',
-                                style: GoogleFonts.roboto(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 20,
-                                  color: Colors.black,
+                          child: Container(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ExpansionTileCard(
+                                borderRadius: BorderRadius.circular(15),
+                                leading: Icon(
+                                  Icons.menu_book_rounded,
+                                  color: Colors.blueAccent,
+                                  size: 55,
                                 ),
-                              ),
-                              children: <Widget>[
-                                const Divider(),
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Icon(
-                                                  Icons.circle,
-                                                  color: Colors.red,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              'N/A',
-                                              style: GoogleFonts.roboto(
-                                                  fontWeight: FontWeight.w300,
-                                                  fontSize: 20),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Divider(
-                                        color: Colors.grey.shade300,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Icon(
-                                                  Icons.circle,
-                                                  color: Colors.yellow,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              'N/A',
-                                              style: GoogleFonts.roboto(
-                                                  fontWeight: FontWeight.w300,
-                                                  fontSize: 20),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Divider(
-                                        color: Colors.grey.shade300,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Icon(
-                                                  Icons.circle,
-                                                  color:
-                                                      Colors.greenAccent[400],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              'N/A',
-                                              style: GoogleFonts.roboto(
-                                                  fontWeight: FontWeight.w300,
-                                                  fontSize: 20),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
+                                title: Text(
+                                  'Score Guidance',
+                                  style: GoogleFonts.roboto(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 20,
+                                    color: Colors.black,
                                   ),
                                 ),
-                              ],
+                                children: <Widget>[
+                                  Divider(),
+                                  FutureBuilder<List<TagNoDetailModel>>(
+                                    future: getEquipmentListById(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        return Column(
+                                          children: <Widget>[
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10.0),
+                                                  child: Icon(
+                                                    Icons.circle,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15.0),
+                                                  child: Text(
+                                                    snapshot.data![0].Bad
+                                                        .toString(),
+                                                    style: GoogleFonts.roboto(
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        fontSize: 20),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Divider(
+                                              color: Colors.grey.shade300,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10.0),
+                                                  child: Icon(
+                                                    Icons.circle,
+                                                    color: Colors.yellow,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15.0),
+                                                  child: Text(
+                                                    snapshot.data![0].Warning
+                                                        .toString(),
+                                                    style: GoogleFonts.roboto(
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        fontSize: 20),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Divider(
+                                              color: Colors.grey.shade300,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10.0),
+                                                  child: Icon(
+                                                    Icons.circle,
+                                                    color:
+                                                        Colors.greenAccent[400],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15.0,
+                                                          bottom: 8.0),
+                                                  child: Text(
+                                                    snapshot.data![0].Good
+                                                        .toString(),
+                                                    style: GoogleFonts.roboto(
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        fontSize: 20),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        );
+                                      } else if (snapshot.hasError) {
+                                        return Text('${snapshot.error}');
+                                      }
+                                      return CircularProgressIndicator();
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

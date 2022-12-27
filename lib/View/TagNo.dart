@@ -10,22 +10,24 @@ import 'package:ihse/View/TagNoDetail.dart';
 
 class TagNoScreen extends StatefulWidget {
   String tagNo;
-  TagNoScreen(this.tagNo);
+  String Cookie;
+  TagNoScreen(this.tagNo, this.Cookie);
 
   @override
-  State<TagNoScreen> createState() => _TagNoScreenState(tagNo);
+  State<TagNoScreen> createState() => _TagNoScreenState(tagNo, Cookie);
 }
 
 class _TagNoScreenState extends State<TagNoScreen> {
   String tagNo;
-  _TagNoScreenState(this.tagNo);
+  String Cookie;
+  _TagNoScreenState(this.tagNo, this.Cookie);
 
   Future<List<TagNoModel>> getTagNo() async {
     Response response = await get(
-      Uri.parse(
-          'https://i-hse.azurewebsites.net/api/FireEquipment/GetEquipmentListByNameForDropdown/' +
-              this.tagNo),
-    );
+        Uri.parse(
+            'https://i-hse.azurewebsites.net/api/FireEquipment/GetEquipmentListByNameForDropdown/' +
+                this.tagNo),
+        headers: {'Content-Type': 'application/json', 'Cookie': Cookie});
 
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);
@@ -117,7 +119,7 @@ class _TagNoScreenState extends State<TagNoScreen> {
                   Expanded(
                     child: Container(
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: ExpansionTileCard(
                           borderRadius: BorderRadius.circular(15),
                           leading: Icon(
@@ -135,93 +137,98 @@ class _TagNoScreenState extends State<TagNoScreen> {
                           ),
                           children: <Widget>[
                             Divider(),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Icon(
+                            FutureBuilder<List<TagNoModel>>(
+                              future: getTagNo(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Column(
+                                    children: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10.0),
+                                            child: Icon(
                                               Icons.circle,
                                               color: Colors.red,
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 15.0),
+                                            child: Text(
+                                              snapshot.data![0].Bad.toString(),
+                                              style: GoogleFonts.roboto(
+                                                  fontWeight: FontWeight.w300,
+                                                  fontSize: 20),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Expanded(
-                                        child: Text(
-                                          'N/A',
-                                          style: GoogleFonts.roboto(
-                                              fontWeight: FontWeight.w300,
-                                              fontSize: 20),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  Divider(
-                                    color: Colors.grey.shade300,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Icon(
+                                      Divider(
+                                        color: Colors.grey.shade300,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10.0),
+                                            child: Icon(
                                               Icons.circle,
                                               color: Colors.yellow,
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 15.0),
+                                            child: Text(
+                                              snapshot.data![0].Warning
+                                                  .toString(),
+                                              style: GoogleFonts.roboto(
+                                                  fontWeight: FontWeight.w300,
+                                                  fontSize: 20),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Expanded(
-                                        child: Text(
-                                          'N/A',
-                                          style: GoogleFonts.roboto(
-                                              fontWeight: FontWeight.w300,
-                                              fontSize: 20),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  Divider(
-                                    color: Colors.grey.shade300,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Icon(
+                                      Divider(
+                                        color: Colors.grey.shade300,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10.0),
+                                            child: Icon(
                                               Icons.circle,
                                               color: Colors.greenAccent[400],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 15.0, bottom: 8.0),
+                                            child: Text(
+                                              snapshot.data![0].Good.toString(),
+                                              style: GoogleFonts.roboto(
+                                                  fontWeight: FontWeight.w300,
+                                                  fontSize: 20),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Expanded(
-                                        child: Text(
-                                          'N/A',
-                                          style: GoogleFonts.roboto(
-                                              fontWeight: FontWeight.w300,
-                                              fontSize: 20),
-                                        ),
-                                      )
                                     ],
-                                  ),
-                                ],
-                              ),
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return Text('${snapshot.error}');
+                                }
+                                return CircularProgressIndicator();
+                              },
                             ),
                           ],
                         ),
@@ -297,18 +304,18 @@ class _TagNoScreenState extends State<TagNoScreen> {
                                                         Navigator.push(
                                                           context,
                                                           MaterialPageRoute(
-                                                            builder:
-                                                                (context) =>
-                                                                    TagNoDetail(
-                                                              snapshot
-                                                                  .data![index]
-                                                                  .Id
-                                                                  .toString(),
-                                                              snapshot
-                                                                  .data![index]
-                                                                  .EquipmentName
-                                                                  .toString(),
-                                                            ),
+                                                            builder: (context) => TagNoDetail(
+                                                                snapshot
+                                                                    .data![
+                                                                        index]
+                                                                    .Id
+                                                                    .toString(),
+                                                                snapshot
+                                                                    .data![
+                                                                        index]
+                                                                    .EquipmentName
+                                                                    .toString(),
+                                                                Cookie),
                                                           ),
                                                         );
                                                       },

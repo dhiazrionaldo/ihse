@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
@@ -19,22 +18,40 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool loading = false;
+  Map<String, String> headers = {};
+  String? cookies;
+
+  void updateCookie(Response response) {
+    String? rawCookie = response.headers['set-cookie'];
+    if (rawCookie != null) {
+      int index = rawCookie.indexOf(';');
+      headers['cookie'] =
+          (index == -1) ? rawCookie : rawCookie.substring(0, index);
+    }
+
+    setState(() {
+      cookies = rawCookie;
+    });
+  }
 
   void login(String Email, Password) async {
     final account = jsonEncode({'Email': Email, 'Password': Password});
     setState(() {
       loading = true;
     });
+
     try {
       Response response = await post(
         Uri.parse('https://i-hse.azurewebsites.net/api/Account/Login'),
         headers: {'Content-Type': 'application/json'},
         body: account,
       );
+      updateCookie(response);
+
       if (response.statusCode == 200) {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => HomePage(),
+            builder: (context) => HomePage(cookies!),
           ),
         );
       } else if (response.statusCode == 400) {

@@ -13,11 +13,13 @@ class MonthlyInspection extends StatefulWidget {
   String tagNo;
   String inspectionType;
   int TotalScore;
-  MonthlyInspection(this.tagNo, this.inspectionType, this.TotalScore);
+  String Cookie;
+  MonthlyInspection(
+      this.tagNo, this.inspectionType, this.TotalScore, this.Cookie);
 
   @override
   State<MonthlyInspection> createState() =>
-      _MonthlyInspectionState(tagNo, inspectionType, TotalScore);
+      _MonthlyInspectionState(tagNo, inspectionType, TotalScore, Cookie);
 }
 
 late Future<InspectionPartModel> _equipmentData;
@@ -27,9 +29,11 @@ class _MonthlyInspectionState extends State<MonthlyInspection> {
   String tagNo;
   String inspectionType;
   int TotalScore;
+  String Cookie;
   late InspectionPartModel equipmentData;
 
-  _MonthlyInspectionState(this.tagNo, this.inspectionType, this.TotalScore);
+  _MonthlyInspectionState(
+      this.tagNo, this.inspectionType, this.TotalScore, this.Cookie);
 
   Future<InspectionPartModel> getPartInspection() async {
     Response response = await get(
@@ -68,17 +72,46 @@ class _MonthlyInspectionState extends State<MonthlyInspection> {
       Response response = await post(
         Uri.parse(
             'https://i-hse.azurewebsites.net/api/FireEquipment/SaveInspectionParts/'),
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json', 'Cookie': Cookie},
         body: result,
       );
 
       if (response.statusCode == 200) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomePage(),
+        AlertDialog alert = AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          content: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text(
+              'Success Submit Data',
+              style: GoogleFonts.roboto(
+                fontSize: 20,
+                fontWeight: FontWeight.w300,
+                color: Color.fromARGB(255, 155, 42, 42),
+              ),
+            ),
+          ),
+          icon: Icon(
+            Icons.verified,
+            color: Colors.green,
+            size: 60,
           ),
         );
+
+        await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        ).then((val) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomePage(Cookie),
+            ),
+          );
+        });
       } else {
         print(response.statusCode);
         print(response.body);

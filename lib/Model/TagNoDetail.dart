@@ -26,6 +26,9 @@ class TagNoDetailModel {
   String? ContentType;
   int? Size;
   String? Data;
+  String? Good;
+  String? Warning;
+  String? Bad;
 
   TagNoDetailModel({
     this.Id,
@@ -53,6 +56,9 @@ class TagNoDetailModel {
     this.ContentType,
     this.Size,
     this.Data,
+    this.Good,
+    this.Warning,
+    this.Bad,
   });
 
   TagNoDetailModel.fromJson(Map<String, dynamic> json) {
@@ -81,6 +87,9 @@ class TagNoDetailModel {
     ContentType = json['ContentType'];
     Size = json['Size'];
     Data = json['Data'];
+    Good = json['Good'];
+    Warning = json['Warning'];
+    Bad = json['Bad'];
   }
 
   Map<String, dynamic> toJson() {
@@ -110,6 +119,9 @@ class TagNoDetailModel {
     data['ContentType'] = ContentType;
     data['Size'] = Size;
     data['Data'] = Data;
+    data['Good'] = Good;
+    data['Warning'] = Warning;
+    data['Bad'] = Bad;
 
     return data;
   }

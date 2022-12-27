@@ -10,13 +10,16 @@ import 'package:ihse/shared/loading.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class Inspection extends StatelessWidget {
+  String Cookie;
+  Inspection(this.Cookie);
+
   final GlobalKey<ExpansionTileCardState> cardA = new GlobalKey();
 
   Future<List<equipmentChartModel>> getChart() async {
     Response response = await get(
-      Uri.parse(
-          'https://i-hse.azurewebsites.net/api/FireEquipment/GetFireEquipmentChart'),
-    );
+        Uri.parse(
+            'https://i-hse.azurewebsites.net/api/FireEquipment/GetFireEquipmentChart'),
+        headers: {'Content-Type': 'application/json', 'Cookie': Cookie});
 
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);
@@ -152,9 +155,10 @@ class Inspection extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => TagNoScreen(snapshot
-                                    .data![index].EquipmentName
-                                    .toString()),
+                                builder: (context) => TagNoScreen(
+                                    snapshot.data![index].EquipmentName
+                                        .toString(),
+                                    Cookie),
                               ),
                             );
                           },
