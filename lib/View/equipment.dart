@@ -18,7 +18,7 @@ class Inspection extends StatelessWidget {
   Future<List<equipmentChartModel>> getChart() async {
     Response response = await get(
         Uri.parse(
-            'https://i-hse.azurewebsites.net/api/FireEquipment/GetFireEquipmentChart'),
+            'https://ihse.azurewebsites.net/api/FireEquipment/GetFireEquipmentChart'),
         headers: {'Content-Type': 'application/json', 'Cookie': Cookie});
 
     if (response.statusCode == 200) {
@@ -115,42 +115,23 @@ class Inspection extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: 3,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            color: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16.0,
-                                vertical: 8.0,
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.circle,
-                                    color: Colors.red,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text("Unable to use the equipment",
-                                        style: GoogleFonts.roboto(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.normal)),
-                                  ),
-                                ],
-                              ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.search,
+                          size: 34.0,
+                          color: Colors.black,
+                        ),
+                        title: TextButton(
+                          child: Text(
+                            'More Detail',
+                            style: GoogleFonts.roboto(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        TextButton.icon(
+                          ),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -162,21 +143,8 @@ class Inspection extends StatelessWidget {
                               ),
                             );
                           },
-                          icon: Icon(
-                            Icons.search,
-                            size: 34.0,
-                            color: Colors.black,
-                          ),
-                          label: Text(
-                            'More Detail',
-                            style: GoogleFonts.roboto(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                        )
-                      ],
+                        ),
+                      ),
                     ),
                   ],
                 ),

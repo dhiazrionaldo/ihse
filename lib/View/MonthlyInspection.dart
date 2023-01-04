@@ -38,7 +38,7 @@ class _MonthlyInspectionState extends State<MonthlyInspection> {
   Future<InspectionPartModel> getPartInspection() async {
     Response response = await get(
       Uri.parse(
-          'https://i-hse.azurewebsites.net/api/FireEquipment/GetFireEquipmentParts/' +
+          'https://ihse.azurewebsites.net/api/FireEquipment/GetFireEquipmentParts/' +
               this.tagNo +
               '/' +
               this.inspectionType),
@@ -71,7 +71,7 @@ class _MonthlyInspectionState extends State<MonthlyInspection> {
     try {
       Response response = await post(
         Uri.parse(
-            'https://i-hse.azurewebsites.net/api/FireEquipment/SaveInspectionParts/'),
+            'https://ihse.azurewebsites.net/api/FireEquipment/SaveInspectionParts/'),
         headers: {'Content-Type': 'application/json', 'Cookie': Cookie},
         body: result,
       );

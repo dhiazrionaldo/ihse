@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
     loading = true;
     try {
       Response response = await post(
-          Uri.parse('https://i-hse.azurewebsites.net/api/Account/Logout'),
+          Uri.parse('https://ihse.azurewebsites.net/api/Account/Logout'),
           headers: {'Content-Type': 'application/json', 'Cookie': Cookie});
       if (response.statusCode == 200) {
         print(response.statusCode);

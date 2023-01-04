@@ -25,7 +25,7 @@ class _TagNoScreenState extends State<TagNoScreen> {
   Future<List<TagNoModel>> getTagNo() async {
     Response response = await get(
         Uri.parse(
-            'https://i-hse.azurewebsites.net/api/FireEquipment/GetEquipmentListByNameForDropdown/' +
+            'https://ihse.azurewebsites.net/api/FireEquipment/GetEquipmentListByNameForDropdown/' +
                 this.tagNo),
         headers: {'Content-Type': 'application/json', 'Cookie': Cookie});
 
