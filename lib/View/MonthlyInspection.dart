@@ -560,7 +560,7 @@ class _MonthlyInspectionState extends State<MonthlyInspection> {
                                                                                 Expanded(
                                                                                   child: TextButton.icon(
                                                                                     onPressed: (() {
-                                                                                      setState(() => equipmentData.mItem2![index].score = 50);
+                                                                                      setState(() => equipmentData.mItem2![index].score = 60);
 
                                                                                       Navigator.pop(context);
                                                                                     }),
