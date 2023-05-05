@@ -71,8 +71,7 @@ class _MonthlyInspectionState extends State<MonthlyInspection> {
     try {
       Response response = await post(
         Uri.parse(
-            'https://ihse.azurewebsites.net/api/FireEquipment/SaveInspectionParts/' +
-                this.inspectionType),
+            'https://ihse.azurewebsites.net/api/FireEquipment/SaveInspectionParts/'),
         headers: {'Content-Type': 'application/json', 'Cookie': Cookie},
         body: result,
       );
