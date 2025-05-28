@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       Response response = await post(
-        Uri.parse('https://ihse.azurewebsites.net/api/Account/Login'),
+        Uri.parse('https://ihse.pertamina-pet.com/api/Account/Login'),
         headers: {'Content-Type': 'application/json'},
         body: account,
       );
