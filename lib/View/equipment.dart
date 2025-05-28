@@ -18,7 +18,7 @@ class Inspection extends StatelessWidget {
   Future<List<equipmentChartModel>> getChart() async {
     Response response = await get(
         Uri.parse(
-            'https://ihse.azurewebsites.net/api/FireEquipment/GetFireEquipmentChart'),
+            'https://ihse.pertamina-pet.com/api/FireEquipment/GetFireEquipmentChart'),
         headers: {'Content-Type': 'application/json', 'Cookie': Cookie});
 
     if (response.statusCode == 200) {
