@@ -29,7 +29,7 @@ class _TagNoDetailState extends State<TagNoDetail> {
   Future<List<TagNoDetailModel>> getEquipmentListById() async {
     Response response = await get(
         Uri.parse(
-            'https://ihse.azurewebsites.net/api/FireEquipment/GetFireEquipmentByEquipmentListId/' +
+            'https://ihse.pertamina-pet.com/api/FireEquipment/GetFireEquipmentByEquipmentListId/' +
                 this.tagNoId),
         headers: {'Content-Type': 'application/json', 'Cookie': Cookie});
 
