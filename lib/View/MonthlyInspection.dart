@@ -38,7 +38,7 @@ class _MonthlyInspectionState extends State<MonthlyInspection> {
   Future<InspectionPartModel> getPartInspection() async {
     Response response = await get(
       Uri.parse(
-          'https://ihse.azurewebsites.net/api/FireEquipment/GetFireEquipmentParts/' +
+          'https://ihse.pertamina-pet.com/api/FireEquipment/GetFireEquipmentParts/' +
               this.tagNo +
               '/' +
               this.inspectionType),
