@@ -42,6 +42,7 @@ class _MonthlyInspectionState extends State<MonthlyInspection> {
               this.tagNo +
               '/' +
               this.inspectionType),
+       headers: {'Content-Type': 'application/json', 'Cookie': Cookie}
     );
 
     if (response.statusCode == 200) {
